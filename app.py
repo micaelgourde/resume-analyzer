@@ -11,7 +11,7 @@ app = Flask(__name__)
 # create a new Flask app instance
 
 app.secret_key = "supersecretkey"
-#Fask uses this key to secure sessiond ata
+#Flask uses this key to secure sessiond ata
 
 app.config["UPLOAD_FOLDER"] = "uploads"
 #create a folder to upload resume

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <label for="file-upload" class="custom-file-upload"> 
+            Upload Resume 
+        </label> 
+    <input id="file-upload" type="file" />
+    <textarea id="jobPost" placeholder="Paste job posting here..."></textarea>
+    <button id="analyzeBtn">Analyze</button>
+</div>
+{% endblock %}
