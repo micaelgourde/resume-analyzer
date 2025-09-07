@@ -97,6 +97,17 @@ def results():
     # Shows and passes the results to the template to display to the user
     return render_template("results.html", results = result)
 
+# Function to extract all text from a PDF file 
+def extract_text_from_pdf(resume):
+    text = ""
+    # Opens the PDF file
+    with pdfplumber.open(resume) as pdf:
+        # Goes through each page and extracts text
+        for page in pdf.pages:
+            if page.extract_text():
+                text += page.extract_text() + "\n"
+        return text # Returns all the text as a single string
+
 # Function to extract keywords from the text
 def extract_keywords(text): 
     # nlp is the SpaCy model loaded earlier
