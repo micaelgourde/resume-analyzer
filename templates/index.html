@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+<!-- This is where the actual inheritance starts, you can imagine anything between
+ block content here and endblock here, is acting like its between those two
+ in base.html -->
+{% block content %}
+<!-- Containers are like a structure, if I want to allign elements, I can just
+ put the elements in a container, and align the container itself in style.css -->
+<div class="container">
+    <!-- The slogan -->
+    <label id="slogan"> Apply Smarter,<br>Not Harder</label>
+    <!-- Since the original file upload is ugly, this is a label that will cover
+     it up, making it feel completely functional like the original, but being a fake button -->
+    <label for="file-upload" class="custom-file-upload"> 
+            Upload Resume 
+        </label> 
+    <!-- the actual functioning file upload button -->
+    <input id="file-upload" type="file">
+    <!-- The area for people to enter their job posting -->
+    <textarea id="jobPost" placeholder="Paste job posting here..."></textarea>
+</div>
+<div class="analyzeContainer">
+    <!-- Analyze button -->
+    <a href="{{url_for('results.html')}}"></a>
+    <button id="analyzeBtn">Analyze</button>
+</div>
+
+{% endblock %}
