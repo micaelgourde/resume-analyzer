@@ -1,0 +1,93 @@
+/* This is the template for any code between the body tag */
+body { 
+    font-family: Arial, Helvetica;
+    background-color: #ffffff;
+    color: #000000
+}
+
+/* This is the template for anything inside container */
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    margin: 10px auto;
+    max-width: 1224px;
+    background-color: #ececec;
+}
+
+/* This is the template for anything inside the analyzeContainer */
+.analyzeContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* This is the structure of the specific element with id "analyzeBtn" */
+#analyzeBtn {
+    width:150px;
+    height: 50px;
+    background-color: #EEC643;
+    color: #000000;
+    border:none;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* This is the template  */
+#analyzeBtn:hover {
+    background-color: #f9d663
+}
+
+button {
+    background-color: #ffffff;
+    color: #EEC643;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+header h1 {
+    text-align: center;
+    margin: 20px 0;
+    background-color: #4a525f;
+    color: #dfebff;
+    padding: 30px 0;
+}
+
+input[type="file"] {
+    display: none;
+  }
+  
+.custom-file-upload {
+    border: 1px solid #ffffff;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    background-color: #022153;
+    color: #ffffff;
+  }
+
+#jobPost {
+    width: 450px;
+    height: 250px;
+}
+
+#slogan {
+    font-size: 24px;
+    padding: 50px;
+}
+
+.outerResultsContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.skillsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
