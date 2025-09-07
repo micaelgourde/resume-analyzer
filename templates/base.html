@@ -1,19 +1,33 @@
+<!-- Basic setup-->
 <!DOCTYPE html>
 <html lang="en">
+
+<!-- Settings/Info area, doesn't actually appear on the screen-->
 <head>
+    <!-- Tells the browser, read this page using UTF-8 encoding, a standard encoding.  -->
     <meta charset="UTF-8">
+    <!-- Tells the browser how to scale this page on different devices like mobile -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Title that appears in browser -->
     <title>AI Resume Analyzer</title>
+    <!-- link to the "stylesheet", which is where you create the structure, colour,
+     and style of the page. -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+<!-- main body section -->
 <body>
     <header>
+        <!-- h1 is a heading text, there is also h2-h6, as you go down the line,
+         they become less bold and smaller texts. -->
         <h1>AI Resume Analyzer</h1>
     </header>
     <main>
+        <!-- This is where inheritance comes in, whatever html extends base.html will add it's
+         own changes here between block content and endblock -->
         {% block content %}{% endblock %}
     </main>
-
-    
+<!-- This loads the JavaScript file, it's placed at the end so all html elements
+ can load before the JavaScript code starts working. -->
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
 </body>
 </html>

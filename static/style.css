@@ -1,12 +1,14 @@
+/* This is the template for any code between the body tag */
 body { 
     font-family: Arial, Helvetica;
     background-color: #ffffff;
     color: #000000
 }
 
+/* This is the template for anything inside container */
 .container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     gap: 20px;
     padding: 20px;
@@ -15,10 +17,17 @@ body {
     background-color: #ececec;
 }
 
+/* This is the template for anything inside the analyzeContainer */
+.analyzeContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* This is the structure of the specific element with id "analyzeBtn" */
 #analyzeBtn {
     width:150px;
-    height: 150px;
-    border-radius: 50%;
+    height: 50px;
     background-color: #EEC643;
     color: #000000;
     border:none;
@@ -27,6 +36,7 @@ body {
     font-size: 16px;
 }
 
+/* This is the template  */
 #analyzeBtn:hover {
     background-color: #f9d663
 }
@@ -63,4 +73,21 @@ input[type="file"] {
 #jobPost {
     width: 450px;
     height: 250px;
+}
+
+#slogan {
+    font-size: 24px;
+    padding: 50px;
+}
+
+.outerResultsContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.skillsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
