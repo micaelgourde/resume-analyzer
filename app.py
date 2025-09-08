@@ -33,13 +33,10 @@ os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST": 
-        # If the user clicked the "upload_resume" button
-        if "upload_resume" in request.form: 
-            # Gets the uploaded file from the form
-            # resume is a FileStorage object created by Flask that temporarily repersents the uploaded file 
-            # request.files is a dictionary where "resume" is the key 
+        # If the user clicked the "analyze" button
+        if "analyze" in request.form:
             resume = request.files.get("resume")
-           
+
             if not resume:
                 return "Please select a resume to upload!"
             
@@ -53,16 +50,11 @@ def index():
             # Session is a dictionary where "resume" is the key 
             session["resume"] = resume.filename 
 
-            return f"Resume {resume.filename} uploaded successfully"
-        
-        # If the user clicked the "analyze" button
-        elif "analyze" in request.form:
-
             #Gets the job description from the form
             job_desc = request.form.get("job_desc")
 
-            if "resume" not in session or not job_desc:
-                return "Please upload a resume and paste a job description before analyzing!"
+            if not job_desc:
+                return "Please upload a job description before analyzing!"
 
             # Stores the job description for the session
             session["job_desc"] = job_desc
@@ -95,7 +87,7 @@ def results():
     results = compare_keywords(resume_text, job_desc)
 
     # Shows and passes the results to the template to display to the user
-    return render_template("results.html", results = result)
+    return render_template("results.html", results = results)
 
 # Function to extract all text from a PDF file 
 def extract_text_from_pdf(resume):
@@ -119,7 +111,11 @@ def extract_keywords(text):
     # token.text.lower() makes all tokens lowercase
     # token.is_alpha is true for tokens that only contain letters 
     # token.is_stop is true for common words (stopwords) that don't carry meaning
-    keywords = [token.text.lower() for token in doc if token.is_alpha and not token.is_stop]
+    ignore_list = ["objective","objectives","goal","goals","mission","vision","summary","profile","education","experience","employment","history","work","background","references","certificates","credentials","training","programs","courses","seminars","workshops","conferences","session","department","division","unit","group","team","committee","board","panel","council","taskforce","position","role","title","opening","vacancy","posting","application","submission","resume","cv","interview","candidate","recruitment","hiring","onboarding","orientation","probation","evaluation","assessment","review","report","reporting","record","documentation","log","archive","file","database","system","platform","software","tool","application","resource","equipment","material","supply","asset","property","facility","location","site","office","branch","laboratory","warehouse","store","field","schedule","calendar","hours","week","month","year","shift","deadline","quarter","period","timeline","plan","strategy","initiative","project","task","assignment","activity","campaign","milestone","checkpoint","phase","stage","decision","option","recommendation","procedure","protocol","policy","standard","requirement","regulation","compliance","law","contract","agreement","terms","condition","approval","acceptance","rejection","budget","revenue","cost","expense","profit","loss","sales","growth","target","performance","rate","score","index","benefit","bonus","incentive","equity","stock","claim","reimbursement","insurance","healthcare","dental","vision","retirement","payroll","overtime","vacation","leave","attendance","coverage","handover","transition","handoff","update","notification","alert","memo","announcement","circular","bulletin","newsletter","brief","slide","presentation","discussion","call","video","meeting","agenda","minutes","note","platform","software","tool","equipment","device","machine","material","supply","resource","asset","property","warehouse","store","committee","board","panel","council","advisory","taskforce","activity","deliverable","checkpoint","phase","stage","decision","option","recommendation","inspection","assessment","research","study","experiment","test","trial","observation","archive","file","database","system","machine","device","calendar","video","discussion","briefing","session","workshop","conference","document","documentation","form","template","reporting","logbook","summary","overview","checklist","note","memo","briefing","schedule","timeline","tracking","recordkeeping","registration","enrollment","orientation","certification","credential","license","degree","diploma","award","recognition","honor","publication","article","paper","presentation","poster","research","study","experiment","evaluation","analysis","inspection","audit","compliance","regulation","policy","procedure","protocol","standard","guideline","requirement","agreement","contract","terms","condition","legislation","law","regulation","rule","directive","ordinance","mandate","statute","guidance","briefing","update","notification","alert","announcement","circular","bulletin","newsletter","press","statement","disclaimer","notice","agenda","minutes","plan","strategy","proposal","option","decision","milestone","phase","stage","checkpoint","deliverable","initiative","campaign","activity","assignment","task","rotation","coverage","shift","timesheet","attendance","overtime","payroll","salary","wage","bonus","incentive","equity","stock","claim","reimbursement","insurance","healthcare","dental","vision","retirement","vacation","leave","resource","material","supply","asset","equipment","tool","device","machine","property","facility","office","branch","site","laboratory","warehouse","store","field","location","platform","software","system","database","file","archive","logbook","record","documentation","document","template","slide","presentation","video","call","discussion","meeting","session","briefing"]
+
+    keywords = [chunk.text.lower() for chunk in doc.noun_chunks
+            if chunk.text.lower() not in ignore_list
+            and all(token.is_alpha and not token.is_stop for token in chunk)]
 
     # returns a list of lowercase tokens that only contain letters and no stopwords
     # also removes duplicates by using set() function and then converts back to list 

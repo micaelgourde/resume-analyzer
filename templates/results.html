@@ -1,15 +1,92 @@
 {% extends "base.html" %}
-
+<!-- This is where the actual inheritance starts, you can imagine anything between
+ block content here and endblock here, is acting like it's between those two
+ in base.html -->
 {% block content %}
 
-<div class = "resultsContainer">
-    <button id="backButton">←</button>
-    <div class = "outerResultsContainer">
-        <div class = "skillsContainer">
-            <label>skills</label>
-        </div>
-        <label>pi chart</label>    
+<div class="results-container">
+
+    <!-- Header -->
+    <h2 class="results-header">Resume Analysis Results</h2>
+
+    <!-- Score Card -->
+    <div class="score-card">
+        <p><strong>Keyword Match Score:</strong> {{ results.score }}%</p>
     </div>
+
+    <!-- Matched & Missing Keywords -->
+    <div class="keywords-section">
+
+        <!-- Matched Keywords -->
+        <div class="matched-keywords">
+            <h3>Matched Keywords ✅</h3>
+            {% if results.matched %}
+                <ul>
+                {% for word in results.matched %}
+                    <li>{{ word }}</li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <p>No matched keywords found.</p>
+            {% endif %}
+        </div>
+
+        <!-- Missing Keywords -->
+        <div class="missing-keywords">
+            <h3>Missing Keywords ❌</h3>
+            {% if results.missing %}
+                <ul>
+                {% for word in results.missing %}
+                    <li>{{ word }}</li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <p>All keywords from the job description are present!</p>
+            {% endif %}
+        </div>
+
+    </div>
+
+    <!-- Pie Chart -->
+    <div class="chart-container">
+        <h3>Keyword Match Chart</h3>
+        <canvas id="keywordChart" width="350" height="350"></canvas>
+    </div>
+
 </div>
 
-{% endblock % }
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('keywordChart').getContext('2d');
+    const matchedCount = {{ results.matched|length }};
+    const missingCount = {{ results.missing|length }};
+    const keywordChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Matched', 'Missing'],
+            datasets: [{
+                data: [matchedCount, missingCount],
+                backgroundColor: ['#4caf50', '#ff6b6b'],
+                borderColor: '#fff',
+                borderWidth: 2,
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        font: {
+                            size: 14,
+                            weight: '500'
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+{% endblock %}
